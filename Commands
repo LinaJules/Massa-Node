@@ -1,0 +1,50 @@
+Open Putty & paste these commands 
+ sudo apt update && sudo apt upgrade -y
+ apt-get install libclang-dev
+ sudo apt install screen
+ sudo apt install pkg-config curl git build-essential libssl-dev
+ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+ source $HOME/.cargo/env
+ rustup toolchain install nightly
+ rustup default nightly
+ cd $HOME
+
+ git clone --branch testnet https://github.com/massalabs/massa.git
+ cd massa/massa-node/
+ screen -S massa_node
+ RUST_BACKTRACE=full cargo run --release -- -p your password|& tee logs.txt
+
+ cd $HOME
+ cd massa/massa-client/
+ screen -S massa_client
+ cargo run --release
+
+ screen -S massa_client
+ cargo run -- --wallet wallet.dat
+ wallet_generate_secret_key
+ wallet_info
+
+ buy_rolls ADDRESS_WALLET 1 0
+ wallet_info
+
+(you can find your wallet with thsese commands):
+cd
+cd massa/massa-client/
+cargo run -- --wallet wallet.dat
+
+
+ node_add_staking_secret_keys SECRET_KEY
+
+
+ cd $HOME
+apt install ufw -y 
+ufw allow ssh 
+ufw allow https 
+ufw allow http 
+ufw allow 31244
+ufw allow 31245
+ufw enable
+
+cd massa/massa-node/config
+nano config.toml
+ [network]routable_ip = "VPS IP"
